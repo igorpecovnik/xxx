@@ -12,7 +12,7 @@ jobs:
       # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
       #- uses: actions/checkout@v2
       - name: Display the path
-        run: ./compile.sh BOARD="bananapi" BRANCH="current" KERNEL_ONLY="no" BUILD_DESKTOP="no" KERNEL_CONFIGURE="no" RELEASE="focal" BUILD_MINIMAL="yes" CLEAN_LEVEL="make,oldcache" SUBREVISION="."$(date --date="tomorrow" +"%j")$(git rev-parse --short HEAD)
+        run: ./compile.sh BOARD="bananapi" BRANCH="current" KERNEL_ONLY="no" BUILD_DESKTOP="no" KERNEL_CONFIGURE="no" RELEASE="focal" BUILD_MINIMAL="yes" CLEAN_LEVEL="make,oldcache" SUBREVISION="."$(date --date="tomorrow" +"%j")${GITHUB_SHA}
         shell: bash
       - name: Hello world
         uses: actions/hello-world-javascript-action@v1
