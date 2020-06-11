@@ -14,7 +14,8 @@ jobs:
         id: slug
         run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
       - name: Compile and update repository
-        run: |         
+        run: |
+         ls -l /         
          ./compile.sh BOARD="bananapi" BETA="yes" BRANCH="current" KERNEL_ONLY="yes" KERNEL_CONFIGURE="no" CLEAN_LEVEL="make,oldcache" SUBREVISION="."${{ steps.slug.outputs.sha8 }}
          echo "done"
         shell: bash
