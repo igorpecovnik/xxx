@@ -25,7 +25,7 @@ jobs:
           prerelease: false
       - name: Compile and update repository
         run: |         
-         ./compile.sh BOARD="bananapi" BRANCH="current" KERNEL_ONLY="yes" KERNEL_CONFIGURE="no" CLEAN_LEVEL="make,oldcache" SUBREVISION="."${{ steps.slug.outputs.sha8 }}
+         ./compile.sh BOARD="bananapi" BETA="yes" BRANCH="current" KERNEL_ONLY="yes" KERNEL_CONFIGURE="no" CLEAN_LEVEL="make,oldcache" SUBREVISION="."${{ steps.slug.outputs.sha8 }}
          ./compile.sh REPOSITORY_UPDATE="update" BETA="yes"
         shell: bash
       - name: Archive production artifacts
