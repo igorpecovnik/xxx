@@ -13,23 +13,13 @@ jobs:
       - name: Get short SHA
         id: slug
         run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
-          release_name: Release v${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
-          draft: false
-          prerelease: false
       - name: Compile and update repository
         run: |         
          ./compile.sh BOARD="bananapi" BETA="yes" BRANCH="current" KERNEL_ONLY="yes" KERNEL_CONFIGURE="no" CLEAN_LEVEL="make,oldcache" SUBREVISION="."${{ steps.slug.outputs.sha8 }}
-         ./compile.sh REPOSITORY_UPDATE="update" BETA="yes"
+         echo "done"
         shell: bash
       - name: Archive production artifacts
         uses: actions/upload-artifact@v1
         with:
           name: Images
-          path: output/repository/public
+          path: output/debs
