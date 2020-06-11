@@ -4,9 +4,8 @@ on: [push]
 
 jobs:
   build:
-    # Job name is Greeting
-    name: Greeting
-    # This job runs on Linux
+    name: Compile changed kernel
+    # This job runs on self hosted Linux machine
     runs-on: self-hosted
     steps:
       # This step uses GitHub's hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action
@@ -20,23 +19,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
-          release_name: Release v${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
+          tag_name: ${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
+          release_name: Release ${{ steps.today.outputs.date }}-${{ steps.slug.outputs.sha8 }}
           draft: false
           prerelease: false
-      - name: Display the path
-        run: ./compile.sh BOARD="bananapi" BRANCH="current" KERNEL_ONLY="no" BUILD_DESKTOP="no" KERNEL_CONFIGURE="no" RELEASE="focal" BUILD_MINIMAL="yes" CLEAN_LEVEL="make,oldcache" SUBREVISION="."$(date --date="tomorrow" +"%j")${{ steps.slug.outputs.sha8 }}
+      - name: Compile and update repository
+        run: |
+         ./compile.sh BOARD="bananapi" BRANCH="current" KERNEL_ONLY="yes" KERNEL_CONFIGURE="no" CLEAN_LEVEL="make,oldcache" SUBREVISION="."${{ steps.slug.outputs.sha8 }}
+         ./compile.sh REPOSITORY_UPDATE="update" BETA="yes"
         shell: bash
-      - name: Hello world
-        uses: actions/hello-world-javascript-action@v1
-        with:
-          who-to-greet: 'Mona the Octocat'
-        id: hello
-      # This step prints an output (time) from the previous step's action.
-      - name: Echo the greeting's time
-        run: echo 'The time was ${{ steps.hello.outputs.time }}.'
       - name: Archive production artifacts
         uses: actions/upload-artifact@v1
         with:
           name: Images
-          path: output
+          path: output/repository/public
