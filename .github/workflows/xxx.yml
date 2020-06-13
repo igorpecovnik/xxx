@@ -16,4 +16,4 @@ jobs:
      - name: Build the tagged Docker image
        run: ./compile.sh docker
      - name: Push the tagged Docker image
-       run: docker push armbian/20.08.0-trunk:${{steps.vars.outputs.tag}}
+       run: docker push armbian/20.08.0-trunk
