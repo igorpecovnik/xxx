@@ -1,0 +1,15 @@
+name: shellcheck
+on:
+  push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Checkout repository
+         uses: actions/checkout@v2
+       - name: Environment variables
+         run: sudo -E bash -c set
+       - name: Install required packages
+         run: sudo apt-get install shellcheck
+       - name: "Check libraries"
+         run: shellcheck -x -s bash lib/*.sh && echo "shellcheck lib/*.sh - OK";
