@@ -14,10 +14,6 @@ jobs:
        id: vars
        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
      - name: Build the tagged Docker image
-       run: docker build . --file Dockerfile --tag pjlamb12/angular-cli:${{steps.vars.outputs.tag}}
+       run: ./compile.sh docker
      - name: Push the tagged Docker image
-       run: docker push pjlamb12/angular-cli:${{steps.vars.outputs.tag}}
-     - name: Build the latest Docker image
-       run: docker build . --file Dockerfile --tag pjlamb12/angular-cli:latest
-     - name: Push the latest Docker image
-       run: docker push pjlamb12/angular-cli:latest
+       run: docker push armbian/20.08.0-trunk:${{steps.vars.outputs.tag}}
