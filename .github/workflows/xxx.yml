@@ -14,6 +14,8 @@ jobs:
        id: vars
        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
      - name: Build the tagged Docker image
-       run: ./compile.sh docker BOARD="bananapi" KERNEL_ONLY="yes" KERNEL_CONFIGURE="no" BRANCH="current"
+       run: |
+        ./compile.sh docker BOARD="bananapi" KERNEL_ONLY="yes" KERNEL_CONFIGURE="no" BRANCH="current"
+        docker image ls      
      - name: Push the tagged Docker image
        run: docker push armbian/armbian:20.08.0-trunk
