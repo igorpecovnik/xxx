@@ -16,4 +16,4 @@ jobs:
      - name: Build the tagged Docker image
        run: ./compile.sh docker BOARD="bananapi" KERNEL_ONLY="yes" KERNEL_CONFIGURE="no" BRANCH="current"
      - name: Push the tagged Docker image
-       run: docker push armbian:20.08.0-trunk
+       run: docker push armbian/armbian:20.08.0-trunk
