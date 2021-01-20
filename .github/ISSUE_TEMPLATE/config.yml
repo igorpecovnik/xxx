@@ -9,7 +9,7 @@ contact_links:
   - name: New features
     url: https://forum.armbian.com/forum/38-feature-requests/
     about: Feature requests and enhancement ideas. A request does not guarantee consideration.
-  - name: Project management
+  - name: Jira
     url: https://armbian.atlassian.net/
     about: Armbian project management shows what we are working on. Only developers can create new task / project or file a bug,
     
