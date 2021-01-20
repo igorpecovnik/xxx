@@ -1,6 +1,6 @@
 ---
 name: Build issues
-about: Only for troubles related to building Armbian!
+about: Create a new issue if there is something wrong with building Armbian.
 title: 'Problem found in ...'
 labels: 'bug'
 assignees: 'igorpecovnik'

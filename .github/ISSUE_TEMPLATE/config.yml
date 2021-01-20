@@ -1,9 +1,9 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Hardware
+  - name: Hardware issues
     url: https://forum.armbian.com/forum/1-bug-tracker-supported-boards-only
     about: Support for hardware issues is provided only via our community. Make sure to use search twice before asking!
-  - name: Applications
+  - name: Applications issues
     url: https://forum.armbian.com/forum/23-community-forums/
     about: Support for applications is provided only via our community. Make sure to use search twice before asking!
   - name: New features
