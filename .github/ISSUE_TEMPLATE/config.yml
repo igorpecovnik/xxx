@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Bug report
-    url: https://www.armbian.com/bugs
-    about: Please report security vulnerabilities here.
-  - name: ❓ Support Question
-    url: https://forum.armbian.com/
-    about: Armbian is free software and provides best effort help through community forums
+  - name: Community support for hardware issues
+    url: https://forum.armbian.com/forum/1-bug-tracker-supported-boards-only
+    about: We only provide best effort help. Make sure to use search before asking for help!
+  - name: Features request
+    url: https://forum.armbian.com/forum/38-feature-requests/
+    about: Feature requests and enhancement ideas. A request does not guarantee consideration!
