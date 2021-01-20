@@ -6,3 +6,7 @@ contact_links:
   - name: Feature requests
     url: https://forum.armbian.com/forum/38-feature-requests/
     about: Feature requests and enhancement ideas. A request does not guarantee consideration!
+  - name: Armbian Jira
+    url: https://armbian.atlassian.net/
+    about: Armbian team project management. Private access - only a team member can create a new task / project / bug
+    
