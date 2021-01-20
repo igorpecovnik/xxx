@@ -2,7 +2,7 @@
 
 Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-Jira ref# [AR-9999]
+Jira reference number [AR-9999]
 
 # How Has This Been Tested?
 
