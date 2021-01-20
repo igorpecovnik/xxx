@@ -1,7 +1,8 @@
+blank_issues_enabled: false
 contact_links:
   - name: Bug report
     url: https://www.armbian.com/bugs
-    about
+    about: Please report security vulnerabilities here.
   - name: ❓ Support Question
     url: https://forum.armbian.com/
     about: Armbian is free software and provides best effort help through community forums
