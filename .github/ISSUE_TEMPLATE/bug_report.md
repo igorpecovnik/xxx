@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve [link to Google!](http://google.com)
+about: Create a report to help us improve <a href=http://google.com>google</a>
 title: ''
 labels: ''
 assignees: ''
