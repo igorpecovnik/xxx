@@ -2,14 +2,14 @@ blank_issues_enabled: false
 contact_links:
   - name: Hardware issues
     url: https://forum.armbian.com/forum/1-bug-tracker-supported-boards-only
-    about: Support for hardware issues is provided only via our community. Make sure to use search twice before asking!
+    about: Support for hardware issues is provided "as is" by community. Make sure to use search twice before opening new topic!
   - name: Applications issues
     url: https://forum.armbian.com/forum/23-community-forums/
-    about: Support for applications is provided only via our community. Make sure to use search twice before asking!
+    about: Support for Linux applications is provided "as is" by community.
   - name: New features
     url: https://forum.armbian.com/forum/38-feature-requests/
-    about: Feature requests and enhancement ideas. A request does not guarantee consideration!
+    about: Feature requests and enhancement ideas. A request does not guarantee consideration.
   - name: Project management
     url: https://armbian.atlassian.net/
-    about: Armbian team project management. Private access - only a team member can create a new task / project / bug
+    about: Armbian project management shows what we are working on. Only developers can create new task / project or file a bug,
     
