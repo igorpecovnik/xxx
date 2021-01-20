@@ -1,5 +1,5 @@
 ---
-name: Build script bug report
+name: Building Armbian
 about: Only for troubles related to building Armbian!
 title: 'Problem found in ...'
 labels: 'bug'
