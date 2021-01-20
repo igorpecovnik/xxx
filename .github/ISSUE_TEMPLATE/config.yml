@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Hardware issues
-    url: https://forum.armbian.com/forum/1-bug-tracker-supported-boards-only
-    about: Support for hardware issues is provided "as is" by community. Make sure to use search twice before opening new topic!
+  - name: Bug reporting
+    url: https://www.armbian.com/bugs/
+    about: Use our bug reporting wizzard to file your bug in the correct place
   - name: Troubles using Armbian
     url: https://forum.armbian.com/forum/23-community-forums/
     about: Support for Linux applications is provided "as is" by community.
