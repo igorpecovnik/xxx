@@ -1,6 +1,6 @@
 ---
 name: Build script bug report
-about: This is only a **build script** issue tracker. It does NOT cover hardware issues!
+about: Only for troubles related to building Armbian!
 title: 'Problem found in ...'
 labels: 'bug'
 assignees: ''
