@@ -1,9 +1,9 @@
 ---
-name: Building Armbian
+name: Build issues
 about: Only for troubles related to building Armbian!
 title: 'Problem found in ...'
 labels: 'bug'
-assignees: ''
+assignees: 'igorpecovnik'
 
 ---
 
