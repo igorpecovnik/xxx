@@ -82,7 +82,7 @@ jobs:
           for m in ${MIRRORS[@]}; do
               DOWNLOAD=${DOWNLOAD}" $m$FILE"
           done
-          echo "https://github.com/${{ github.repository }}/releases/download/bananapim2plus/${FILE}"
+          echo "https://github.com/${{ github.repository }}/releases/download/${FILE/archive\//}"
           if ! wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/bananapim2plus/${FILE} ; then
               echo "Downloading ..."
               eval "${DOWNLOAD}"
