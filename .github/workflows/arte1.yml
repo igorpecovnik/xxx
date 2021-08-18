@@ -64,7 +64,7 @@ jobs:
 
           BOARD="${{ matrix.board }}/"
           DEBUG="yes"
-          FILES=$(cat userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
+          FILES=$(cat temp1/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | grep -v f_oss | tr -d , | tr -d " " | sort| uniq) 
 
           for FILE in ${FILES[@]}
