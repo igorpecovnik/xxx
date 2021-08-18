@@ -39,7 +39,7 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
-          path: ~/userdata.csv
+          path: temp1
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/userdata.csv') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
@@ -54,7 +54,7 @@ jobs:
 
           wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
           wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
-          cat userdata.csv
+          cat temp1/userdata.csv
       - 
         uses: svenstaro/upload-release-action@v2
         with:
