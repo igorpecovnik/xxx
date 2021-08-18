@@ -38,6 +38,8 @@ jobs:
             aaaa: 9
 
     steps:
+      - name: Install depen
+        run: sudo apt-get -y install parallel jq
       - name: Cache Gradle packages
         uses: actions/cache@v2
         env:
@@ -55,7 +57,6 @@ jobs:
       -
         id: image-build
         run: |        
-          sudo apt -qq -y install parallel jq
           BOARD="${{ matrix.board }}/"
           DEBUG="yes"
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
