@@ -17,7 +17,7 @@ jobs:
           cache-name: cache-build
         with:
           path: temp
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/lockfiles') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**') }}
 
   "A": # short name because GH will expand with the matrix values
     needs: [ prepare ]
@@ -44,8 +44,9 @@ jobs:
           cache-name: cache-build
         with:
           path: temp
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**') }}
 
       - 
         uses: styfle/cancel-workflow-action@0.9.1
