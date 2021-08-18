@@ -48,10 +48,6 @@ jobs:
         with:
           access_token: ${{ github.token }}
       -
-        run: |
-          RELEASE_OWNER_AND_REPO="${{ github.repository }}"
-          echo ${RELEASE_OWNER_AND_REPO}
-      -
         id: image-build
         run: |
 
@@ -83,7 +79,7 @@ jobs:
               DOWNLOAD=${DOWNLOAD}" $m$FILE"
           done
           echo "https://github.com/${{ github.repository }}/releases/download/${FILE/archive\//}"
-          if ! wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/bananapim2plus/${FILE} ; then
+          if ! wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/${FILE/archive\//} ; then
               echo "Downloading ..."
               eval "${DOWNLOAD}"
           fi
