@@ -51,8 +51,6 @@ jobs:
         id: image-build
         run: |
 
-          wget -q https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
-
           BOARD="bananapi"
           DEBUG="yes"
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
@@ -65,7 +63,6 @@ jobs:
             do
               echo "$k$j"
             done | parallel --halt now,fail=1 --jobs 32 wget -q --spider --timeout=5 --tries=2 --retry-connrefused {} 2>&1 >/dev/null)
-
             if [[ -n "${PARALLEL}" ]]; then
               REMOVE=$(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed "s/$BOARD.*//" | sort | uniq)
               for l in ${REMOVE[@]}; do
@@ -74,7 +71,6 @@ jobs:
               done
               [[ $DEBUG == yes ]] && echo "Timeout: $(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | cut -d"/" -f1-4 | sort | uniq)/${BOARD}/archive/$(echo $PARALLEL | egrep -o 'https?://[^ ]+' | rev | cut -d / -f 1 | rev)"
             fi
-
           # download
           DOWNLOAD="axel -c -a "
           for m in ${MIRRORS[@]}; do
@@ -82,7 +78,6 @@ jobs:
           done
           eval "${DOWNLOAD}"
           done
-
       - 
         uses: svenstaro/upload-release-action@v2
         with:
