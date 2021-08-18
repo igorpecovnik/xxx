@@ -49,11 +49,12 @@ jobs:
           wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
           echo "FILE_PATH=Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz" >> $GITHUB_ENV
 
+  upload:
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: *.xz
+        file: *
         tag: ${{ github.ref }}
         overwrite: true
         file_glob: true
