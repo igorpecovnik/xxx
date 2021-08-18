@@ -16,11 +16,11 @@ jobs:
             vars: "CLOUD_IMAGE=yes"
             aaaa: 2
 
-          - board: "Runner 2"
-            desc: Khadas VIM3, cloud image, user-data at /boot (ext4)
-            runnerLabel: can-build-arm64
-            vars: "CLOUD_IMAGE=yes"
-            aaaa: 3
+#          - board: "Runner 2"
+#            desc: Khadas VIM3, cloud image, user-data at /boot (ext4)
+#            runnerLabel: can-build-arm64
+#            vars: "CLOUD_IMAGE=yes"
+#            aaaa: 3
 
     steps:
       - 
