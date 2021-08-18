@@ -27,12 +27,12 @@ jobs:
       fail-fast: false # let other jobs try to complete if one fails
       matrix:
         include:
-          - board: "Bananapi"
+          - board: bananapi
             desc: Mirroring Bananapi
             vars: bananapi
             aaaa: 2
 
-          - board: "Bananapi M2"
+          - board: bananapim2plus
             desc: Mirroring Bananapi M2
             vars: bananapim2
             aaaa: 3
@@ -59,7 +59,7 @@ jobs:
           cat temp1/userdata.csv | grep "${{ matrix.board }}/" | grep -v nightly | cut -d"|" -f2
 
           #wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
-          #wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
+          wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
           #cat temp1/userdata.csv
       - 
         uses: svenstaro/upload-release-action@v2
