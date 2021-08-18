@@ -82,7 +82,7 @@ jobs:
           for m in ${MIRRORS[@]}; do
               DOWNLOAD=${DOWNLOAD}" $m$FILE"
           done
-          if wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/bananapim2plus/${FILE} ; then eval "${DOWNLOAD}"; fi
+          if ! wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/bananapim2plus/${FILE} ; then eval "${DOWNLOAD}"; fi
           done
       - 
         uses: svenstaro/upload-release-action@v2
