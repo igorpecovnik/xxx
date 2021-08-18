@@ -84,6 +84,7 @@ jobs:
               eval "${DOWNLOAD}"
           fi
           done
+          touch Armbian.txt
       - 
         uses: svenstaro/upload-release-action@v2
         with:
