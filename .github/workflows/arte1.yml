@@ -19,15 +19,16 @@ jobs:
         id: image-build
         run: |        
 
+          mkdir -p bananapi/archive
+          cd bananapi/archive
           wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
           wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
-          echo "FILE_PATH=Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz" >> $GITHUB_ENV
 
       - 
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: Armbian*
+          file: bananapi/archive/Armbian*
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
