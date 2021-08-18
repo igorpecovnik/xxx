@@ -59,4 +59,3 @@ release:
           asset_path: ./${{ env.FILE_PATH }}
           asset_name: ${{ env.FILE_PATH }}
           asset_content_type: application/x-iso-image
-      -
