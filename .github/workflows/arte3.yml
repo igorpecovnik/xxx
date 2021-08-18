@@ -19,7 +19,7 @@ jobs:
           path: temp
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**') }}
 
-  "B": # short name because GH will expand with the matrix values
+  "Build": # short name because GH will expand with the matrix values
     needs: [ prepare ]
     runs-on: ubuntu-20.04
     timeout-minutes: 480
@@ -28,14 +28,7 @@ jobs:
       matrix:
         include:
           - board: bananapi
-            desc: Mirroring
-            vars: bananapi
-            aaaa: 5
-
           - board: bananapim2plus
-            desc: Mirroring
-            vars: bananapim2
-            aaaa: 9
 
     steps:
       - name: Install depen
@@ -58,13 +51,14 @@ jobs:
         id: image-build
         run: |
 
-
           wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
 
           BOARD="bananapi/"
           DEBUG="yes"
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | grep -v f_oss | tr -d , | tr -d " " | sort| uniq) 
+
+          echo $FILES
 
           for FILE in ${FILES[@]}
           do
