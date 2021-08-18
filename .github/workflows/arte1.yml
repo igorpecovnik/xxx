@@ -11,6 +11,8 @@ jobs:
           wget https://www.armbian.com/userdata.csv
       - name: Cache Gradle packages
         uses: actions/cache@v2
+        env:
+          cache-name: cache-build-list
         with:
           path: userdata.csv
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/userdata.csv') }}
