@@ -25,8 +25,8 @@ jobs:
     timeout-minutes: 480
     strategy:
       fail-fast: false # let other jobs try to complete if one fails
-      matrix:
-        include:
+      matrix: 
+        include: # build this way: cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/'
           - board: bananapi
           - board: bananapim2plus
 
@@ -82,7 +82,10 @@ jobs:
           for m in ${MIRRORS[@]}; do
               DOWNLOAD=${DOWNLOAD}" $m$FILE"
           done
-          if ! wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/bananapim2plus/${FILE} ; then eval "${DOWNLOAD}"; fi
+          if ! wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/bananapim2plus/${FILE} ; then
+              echo "Downloading ..."
+              eval "${DOWNLOAD}"
+          fi
           done
       - 
         uses: svenstaro/upload-release-action@v2
