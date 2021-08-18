@@ -45,8 +45,10 @@ release:
       -
         id: image-build
         run: |        
-        wget https://imola.armbian.com/dl/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
-        export FILE_PATH=Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
+
+          wget https://imola.armbian.com/dl/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
+          export FILE_PATH=Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
+
       - 
         id: upload_release 
         uses: actions/upload-release-asset@v1.0.2
