@@ -56,7 +56,8 @@ jobs:
           access_token: ${{ github.token }}
       -
         id: image-build
-        run: |        
+        run: |
+
           BOARD="${{ matrix.board }}/"
           DEBUG="yes"
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
