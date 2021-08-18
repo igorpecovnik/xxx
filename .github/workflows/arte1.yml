@@ -15,7 +15,7 @@ jobs:
           cache-name: cache-build-list
         with:
           path: userdata.csv
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/userdata.csv') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
 
   "A": # short name because GH will expand with the matrix values
     needs: [ prepare ]
@@ -38,11 +38,13 @@ jobs:
     steps:
       - name: Cache Gradle packages
         uses: actions/cache@v2
+        env:
+          cache-name: cache-build-list
         with:
           path: temp1
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/userdata.csv') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-${{ env.cache-name }}
 
       - 
         uses: styfle/cancel-workflow-action@0.9.1
