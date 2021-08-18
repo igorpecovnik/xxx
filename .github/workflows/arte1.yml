@@ -12,8 +12,8 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v2
         with:
-        path: |
-          userdata.csv
+          path: |
+            userdata.csv
 
   "A": # short name because GH will expand with the matrix values
     needs: [ prepare ]
