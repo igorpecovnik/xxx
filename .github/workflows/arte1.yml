@@ -6,9 +6,14 @@ jobs:
   prepare:
     runs-on: ubuntu-20.04
     steps:
-      - 
+      -
         run: |
           wget https://www.armbian.com/userdata.csv
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+        path: |
+          userdata.csv
 
   "A": # short name because GH will expand with the matrix values
     needs: [ prepare ]
