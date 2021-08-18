@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - 
-        run |
-        wget https://www.armbian.com/userdata.csv
+        run: |
+          wget https://www.armbian.com/userdata.csv
 
   "A": # short name because GH will expand with the matrix values
     needs: [ prepare ]
