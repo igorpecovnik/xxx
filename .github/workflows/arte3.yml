@@ -28,12 +28,12 @@ jobs:
       matrix:
         include:
           - board: bananapi
-            desc: Mirroring Bananapi
+            desc: Mirroring
             vars: bananapi
             aaaa: 5
 
           - board: bananapim2plus
-            desc: Mirroring Bananapi M2
+            desc: Mirroring
             vars: bananapim2
             aaaa: 9
 
@@ -56,7 +56,7 @@ jobs:
         id: image-build
         run: |        
 
-          cat temp1/userdata.csv | grep "${{ matrix.board }}/" | grep -v nightly | cut -d"|" -f2
+          cat temp/userdata.csv | grep "${{ matrix.board }}/" | grep -v nightly | cut -d"|" -f2
 
           #wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
           #wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
