@@ -92,4 +92,4 @@ jobs:
           tag: ${{ matrix.board }}
           overwrite: true
           file_glob: true
-
+          body: "This is Armbian file mirror at Github"
