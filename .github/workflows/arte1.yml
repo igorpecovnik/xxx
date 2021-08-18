@@ -1,4 +1,4 @@
-name: image_build_all1
+name: image_build_a
 on:
   workflow_dispatch:
 
