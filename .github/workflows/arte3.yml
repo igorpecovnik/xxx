@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Install depen
-        run: sudo apt-get -y install parallel jq
+        run: sudo apt-get -y install parallel jq axel
       - name: Cache Gradle packages
         uses: actions/cache@v2
         env:
