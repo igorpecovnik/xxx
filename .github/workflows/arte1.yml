@@ -14,7 +14,7 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v2
         env:
-          cache-name: cache-build-list
+          cache-name: cache-build
         with:
           path: temp1
           key: ${{ runner.os }}-build-${{ env.cache-name }}
@@ -41,7 +41,7 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v2
         env:
-          cache-name: cache-build-list
+          cache-name: cache-build
         with:
           path: temp1
           key: ${{ runner.os }}-build-${{ env.cache-name }}
