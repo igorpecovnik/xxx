@@ -58,7 +58,10 @@ jobs:
         id: image-build
         run: |
 
-          BOARD="${{ matrix.board }}/"
+
+          wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
+
+          BOARD="bananapi/"
           DEBUG="yes"
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | grep -v f_oss | tr -d , | tr -d " " | sort| uniq) 
