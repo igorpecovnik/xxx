@@ -3,7 +3,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  prepare:
+    runs-on: ubuntu-20.04
+    steps:
+      - 
+        run |
+        wget https://www.armbian.com/userdata.csv
+
   "A": # short name because GH will expand with the matrix values
+    needs: [ prepare ]
     runs-on: ubuntu-20.04
     timeout-minutes: 480
     strategy:
@@ -31,7 +39,7 @@ jobs:
 
           wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
           wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_minimal.img.xz
-
+          cat userdata.csv
       - 
         uses: svenstaro/upload-release-action@v2
         with:
