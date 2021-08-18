@@ -58,6 +58,10 @@ jobs:
           set +e
           BOARD="bananapi"
           DEBUG="no"
+
+          wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/bananapim2plus/Armbian_21.05.1_Bananapi_buster_current_5.10.34.img.xz
+          echo $?
+
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | tr -d , | tr -d " " | sort| uniq) 
           for FILE in ${FILES[@]}
