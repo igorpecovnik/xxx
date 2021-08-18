@@ -3,32 +3,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  prepare_release:
-    runs-on: ubuntu-latest
-    steps:
-      - 
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ github.token }}
-      - 
-        id: time
-        uses: nanzm/get-time-action@v1.1
-        with:
-          format: 'YY.MM'
-      - 
-        id: release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.time.outputs.time }}
-          release_name: ${{ steps.time.outputs.time }}
-          draft: false
-          prerelease: false
-    outputs:
-      upload_url: ${{ steps.release.outputs.upload_url }}
-      release_id: ${{ steps.release.outputs.id }}
-
   release:
     runs-on: ubuntu-20.04
     needs: prepare_release
