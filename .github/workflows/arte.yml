@@ -46,7 +46,7 @@ jobs:
         id: image-build
         run: |        
 
-          wget https://dl.armbian.com/dl/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
+          wget https://dl.armbian.com/bananapi/archive/Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz
           echo "::set-output name=FILE_PATH::Armbian_21.05.1_Bananapi_buster_current_5.10.34_xfce_desktop.img.xz"
 
       - 
