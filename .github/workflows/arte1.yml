@@ -9,14 +9,14 @@ jobs:
       -
         run: |
           wget https://www.armbian.com/userdata.csv
-          mkdir temp1
-          cp userdata.csv temp1/
+          mkdir temp
+          cp userdata.csv temp/
       - name: Cache Gradle packages
         uses: actions/cache@v2
         env:
           cache-name: cache-build
         with:
-          path: temp1
+          path: temp
           key: ${{ runner.os }}-build-${{ env.cache-name }}
 
   "A": # short name because GH will expand with the matrix values
@@ -43,7 +43,7 @@ jobs:
         env:
           cache-name: cache-build
         with:
-          path: temp1
+          path: temp
           key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}
@@ -64,7 +64,7 @@ jobs:
 
           BOARD="${{ matrix.board }}/"
           DEBUG="yes"
-          FILES=$(cat temp1/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
+          FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | grep -v f_oss | tr -d , | tr -d " " | sort| uniq) 
 
           for FILE in ${FILES[@]}
