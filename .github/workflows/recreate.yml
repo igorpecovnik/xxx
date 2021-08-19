@@ -12,9 +12,9 @@ jobs:
         fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
     - name: Create local changes
       run: |
-        ls -l
-        touch "1234"
-        git add .
+        wget https://www.armbian.com/userdata.csv
+        cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/' > .github/workflows/boards.txt
+        git add .github/workflows/boards.txt
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
