@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  name: "Recreate actions"
   build:
     runs-on: ubuntu-latest
     steps:
