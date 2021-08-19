@@ -167,7 +167,7 @@ jobs:
         run: |
 
           set +e
-          BOARD="bananapi"
+          BOARD="${{ matrix.board }}"
           DEBUG="no"
 
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
