@@ -29,28 +29,6 @@ jobs:
       fail-fast: false # let other jobs try to complete if one fails
       matrix: 
         include: # build this way: cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/'
-          - board: bananapi
-          - board: bananapim2plus
-          - board: bananapim2ultra
-          - board: bananapim2zero
-          - board: bananapim3
-          - board: bananapim64
-          - board: bananapipro
-          - board: bananapir2
-          - board: clearfogbase
-          - board: clearfogpro
-          - board: cubieboard2
-          - board: cubieboard
-          - board: cubietruck
-          - board: cubox-i
-          - board: espressobin
-          - board: fe-som-rk3399
-          - board: firefly-rk3399
-          - board: helios4
-          - board: helios64
-          - board: jetson-nano
-          - board: khadas-edge
-          - board: khadas-vim1
           - board: khadas-vim2
           - board: khadas-vim3
           - board: khadas-vim3l
@@ -204,7 +182,7 @@ jobs:
           done
           echo "${{ matrix.board }}" > Armbian.txt
       - 
-        if: steps.set_output.outputs.UPLOAD == 'true'
+        if: ${{ env.UPLOAD == 'true' }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
