@@ -201,10 +201,7 @@ jobs:
           done
           echo "${{ matrix.board }}" > Armbian.txt
       - 
-       concurrency: 
-          group: ${{ github.head_ref }}
-          cancel-in-progress: true 
-       uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: Armbian*
