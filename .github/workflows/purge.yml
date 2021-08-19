@@ -8,7 +8,7 @@ jobs:
     timeout-minutes: 480
     strategy:
       max-parallel: 4
-      fail-fast: false # let other jobs try to complete if one fails
+      fail-fast: false
       matrix: 
         include: # build this way: cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/'
           - board: bananapi
