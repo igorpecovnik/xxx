@@ -14,12 +14,13 @@ jobs:
       run: |
         wget https://www.armbian.com/userdata.csv
         cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/' > .github/workflows/boards.txt
-        git add .github/workflows/boards.txt
+        sed '/include/r.github/workflows/boards.txt' .github/workflows/purge.template > .github/workflows/purge.yml        
+        git add .github/workflows/purge.yml
     - name: Commit files
       run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git commit -m "Add changes" -a
+        git config --local user.email "info@armbian.com"
+        git config --local user.name "Armbianworker"
+        git commit -m "Update github actions" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
