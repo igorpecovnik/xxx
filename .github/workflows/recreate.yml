@@ -14,8 +14,10 @@ jobs:
       run: |
         wget https://www.armbian.com/userdata.csv
         cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/' > .github/workflows/boards.txt
-        sed '/include/r.github/workflows/boards.txt' .github/workflows/purge.template > .github/workflows/purge.yml        
-        git add .github/workflows/purge.yml
+        sed '/include/r.github/workflows/boards.txt' .github/workflows/mirror-purge.template > .github/workflows/mirror-purge.yml
+        sed '/include/r.github/workflows/boards.txt' .github/workflows/mirror-sync.template > .github/workflows/mirror-sync.yml
+        git add .github/workflows/mirror-purge.yml
+        git add .github/workflows/mirror-sync.yml
     - name: Commit files
       run: |
         git config --local user.email "info@armbian.com"
