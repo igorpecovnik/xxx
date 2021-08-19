@@ -19,6 +19,7 @@ jobs:
         sed '/include/r.github/workflows/boards.txt' .github/workflows/mirror-sync.template > .github/workflows/mirror-sync.yml
         git add .github/workflows/mirror-purge.yml
         git add .github/workflows/mirror-sync.yml
+        git rm userdata.csv
     - name: Commit files
       run: |
         git config --local user.email "info@armbian.com"
