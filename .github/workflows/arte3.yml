@@ -24,7 +24,9 @@ jobs:
     needs: [ Prepare ]
     runs-on: ubuntu-20.04
     timeout-minutes: 480
-    concurrency: staging_environment
+    concurrency: 
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false # let other jobs try to complete if one fails
       matrix: 
