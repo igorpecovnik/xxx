@@ -19,12 +19,11 @@ jobs:
         sed '/include/r.github/workflows/boards.txt' .github/workflows/mirror-sync.template > .github/workflows/mirror-sync.yml
         git add .github/workflows/mirror-purge.yml
         git add .github/workflows/mirror-sync.yml
-        rm -f userdata.csv
     - name: Commit files
       run: |
         git config --local user.email "info@armbian.com"
         git config --local user.name "Armbianworker"
-        git commit -m "Update github actions" -a
+        git commit --allow-empty -m "Update github actions" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
