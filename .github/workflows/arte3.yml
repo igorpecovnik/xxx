@@ -2,11 +2,6 @@ name: image_build_more
 on:
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-
 jobs:
   Prepare:
     runs-on: ubuntu-20.04
@@ -30,6 +25,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 480
     strategy:
+      max-parallel: 2
       fail-fast: false # let other jobs try to complete if one fails
       matrix: 
         include: # build this way: cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/'
