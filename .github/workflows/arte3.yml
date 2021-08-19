@@ -199,12 +199,12 @@ jobs:
           if ! wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/${FILE/archive\//} ; then
               echo "Downloading ..."
               eval "${DOWNLOAD}"
+              echo "::set-output name=UPLOAD::true"
           fi
           done
           echo "${{ matrix.board }}" > Armbian.txt
-          echo "::set-output name=RUN_JOB_THREE::$(<pass_file/RUN_JOB_THREE.TXT)"
       - 
-        if: steps.set_output.outputs.RUN_JOB_THREE == 'true'
+        if: steps.set_output.outputs.UPLOAD == 'true'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
