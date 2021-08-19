@@ -3,8 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  name: "Recreate actions"
-  build:
+  "Recreate actions":
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
