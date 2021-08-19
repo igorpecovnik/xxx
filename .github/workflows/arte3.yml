@@ -11,6 +11,7 @@ jobs:
           wget https://www.armbian.com/userdata.csv
           mkdir temp
           cp userdata.csv temp/
+          
       - name: Cache Gradle packages
         uses: actions/cache@v2
         env:
@@ -23,6 +24,7 @@ jobs:
     needs: [ Prepare ]
     runs-on: ubuntu-20.04
     timeout-minutes: 480
+    concurrency: staging_environment
     strategy:
       fail-fast: false # let other jobs try to complete if one fails
       matrix: 
