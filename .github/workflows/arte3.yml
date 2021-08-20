@@ -112,10 +112,11 @@ jobs:
     needs: [ Build ]
     runs-on: ubuntu-20.04
     steps:
-      - name: Cache Gradle packages
-        uses: actions/cache@v2
-        env:
-          cache-name: build-logs
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
         with:
-          path: logs
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }} 
+          name: logs
+    
+      - name: Display structure of downloaded files
+        run: ls -R
