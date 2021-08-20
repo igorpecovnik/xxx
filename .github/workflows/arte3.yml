@@ -93,7 +93,7 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v2
         env:
-          cache-name: cache-build
+          cache-name: build-logs
         with:
           path: logs
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }}
@@ -116,7 +116,7 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v2
         env:
-          cache-name: cache-build
+          cache-name: build-logs
         with:
           path: logs
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }} 
