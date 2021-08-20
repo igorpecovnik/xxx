@@ -55,7 +55,7 @@ jobs:
 
           set +e
           BOARD="${{ matrix.board }}"
-          DEBUG="no"
+          DEBUG="yes"
 
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | tr -d , | tr -d " " | sort| uniq) 
