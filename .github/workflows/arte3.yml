@@ -120,7 +120,10 @@ jobs:
     
       - name: Display structure of downloaded files
         run: |
-          cat *.log | awk -F ',' '{print $2}' | sort | uniq -c | sort -n > README.md
+          echo "[![Sync mirror](https://github.com/armbian/mirror/actions/workflows/mirror-sync.yml/badge.svg)](https://github.com/armbian/mirror/actions/workflows/mirror-sync.yml)
+" > README.md
+          echo -en "\n# Mirrors error count" >> README.md
+          cat *.log | awk -F ',' '{print $2}' | sort | uniq -c | sort -n >> README.md
       - name: Add
         run: |
           git add README.md
