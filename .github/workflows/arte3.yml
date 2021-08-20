@@ -88,17 +88,9 @@ jobs:
               echo "Downloading ..."
               eval "${DOWNLOAD}"
               echo "UPLOAD=true" >> $GITHUB_ENV
-              echo "$m" >> logs/${BOARD}
+              echo "$m" >> logs/${BOARD}.log
           fi
           done
-      - name: Cache Gradle packages
-        uses: actions/cache@v2
-        env:
-          cache-name: build-logs
-        with:
-          path: logs
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }}
-
       - name: Upload artefacts
         if: ${{ env.UPLOAD == 'true' }}
         uses: svenstaro/upload-release-action@v2
@@ -109,6 +101,11 @@ jobs:
           overwrite: true
           file_glob: true
           body: "This is Armbian file mirror at Github"
+      - name: Upload logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs
+          path: *.log
 
   Finish:
     needs: [ Build ]
@@ -121,7 +118,3 @@ jobs:
         with:
           path: logs
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }} 
-      - name: Test
-        run: |
-          ls -l logs
-          echo ${{ env.RMIRROR }}
