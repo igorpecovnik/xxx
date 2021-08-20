@@ -76,7 +76,8 @@ jobs:
               [[ $DEBUG == yes ]] && echo "Timeout: $(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | cut -d"/" -f1-4 | sort | uniq)/${BOARD}/archive/$(echo $PARALLEL | egrep -o 'https?://[^ ]+' | rev | cut -d / -f 1 | rev)"
             fi
           # download
-          truncate -s 0 temp/${BOARD}
+          mkdir -p logs
+          truncate -s 0 logs/${BOARD}
           DOWNLOAD="axel -q -c -a "
           for m in ${MIRRORS[@]}; do
               DOWNLOAD=${DOWNLOAD}" $m$FILE"
@@ -86,7 +87,7 @@ jobs:
               echo "Downloading ..."
               eval "${DOWNLOAD}"
               echo "UPLOAD=true" >> $GITHUB_ENV
-              echo "$m" >> temp/${BOARD}
+              echo "$m" >> logs/${BOARD}
           fi
           done
       - name: Cache Gradle packages
@@ -94,7 +95,7 @@ jobs:
         env:
           cache-name: cache-build
         with:
-          path: temp
+          path: logs
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }}
 
       - name: Upload artefacts
@@ -117,8 +118,8 @@ jobs:
         env:
           cache-name: cache-build
         with:
-          path: temp
+          path: logs
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }} 
       - name: Test
         run: |
-          ls -l temp
+          ls -l logs
