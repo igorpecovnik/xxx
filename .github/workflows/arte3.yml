@@ -74,7 +74,7 @@ jobs:
               REMOVE=$(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed "s/$BOARD.*//" | sort | uniq)
               for l in ${REMOVE[@]}; do
                 [[ "${DEBUG}" == yes ]] && echo "Removing mirror: $l"
-                echo "Error,$l,$k" >> ${BOARD}.log
+                echo "Error,$l,$FILE" >> ${BOARD}.log
                 MIRRORS=$(echo "${MIRRORS}" | sed "s|$l ||")
               done
               [[ $DEBUG == yes ]] && echo "Timeout: $(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | cut -d"/" -f1-4 | sort | uniq)/${BOARD}/archive/$(echo $PARALLEL | egrep -o 'https?://[^ ]+' | rev | cut -d / -f 1 | rev)"
