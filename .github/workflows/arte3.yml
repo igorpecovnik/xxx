@@ -105,7 +105,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: logs
-          path: file.log
+          path: ${{ env.BOARD }}.log
 
   Finish:
     needs: [ Build ]
