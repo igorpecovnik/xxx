@@ -120,9 +120,7 @@ jobs:
     
       - name: Display structure of downloaded files
         cat *.log | awk -F ',' '{print $2}' | sort | uniq -c | sort -n > README.md
-      - name: Create local changes
-        run: |
-          git add README.md
+        git add README.md
 
       - name: Commit files
         run: |
