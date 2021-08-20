@@ -119,4 +119,18 @@ jobs:
           name: logs
     
       - name: Display structure of downloaded files
-        run: ls -R
+        cat *.log | awk -F ',' '{print $2}' | sort | uniq -c | sort -n > README.md
+      - name: Create local changes
+        run: |
+          git add README.md
+
+      - name: Commit files
+        run: |
+          git config --local user.email "info@armbian.com"
+          git config --local user.name "Armbianworker"
+          git commit --allow-empty -m "Update github actions" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.IGOR }}
+          branch: ${{ github.ref }}
