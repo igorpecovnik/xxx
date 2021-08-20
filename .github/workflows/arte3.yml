@@ -119,7 +119,8 @@ jobs:
           name: logs
     
       - name: Display structure of downloaded files
-        cat *.log | awk -F ',' '{print $2}' | sort | uniq -c | sort -n > README.md
+        run: |
+          cat *.log | awk -F ',' '{print $2}' | sort | uniq -c | sort -n > README.md
       - name: Add
         run: |
           git add README.md
