@@ -18,7 +18,7 @@ jobs:
           cache-name: cache-build
         with:
           path: temp
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }}
 
   Build: # short name because GH will expand with the matrix values
     needs: [ Prepare ]
@@ -40,9 +40,9 @@ jobs:
           cache-name: cache-build
         with:
           path: temp
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }} 
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**') }}
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }} 
 
       - 
         uses: styfle/cancel-workflow-action@0.9.1
@@ -99,7 +99,7 @@ jobs:
           body: "This is Armbian file mirror at Github"
 
   Finish:
-    needs: [ Prepare ]
+    needs: [ Build ]
     runs-on: ubuntu-20.04
     steps:
       - name: Cache Gradle packages
@@ -108,7 +108,7 @@ jobs:
           cache-name: cache-build
         with:
           path: temp
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }} 
       - name: Test
         run: |
-          ls -l test
+          ls -l
