@@ -60,6 +60,7 @@ jobs:
           FILES=$(cat temp/userdata.csv | grep ${BOARD}"/" | grep -v nightly | cut -d"|" -f2) # exclude nightly
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | tr -d , | tr -d " " | sort| uniq) 
           echo "BOARD=$BOARD" >> $GITHUB_ENV
+          truncate -s 0 ${BOARD}.log
 
           for FILE in ${FILES[@]}
           do
@@ -73,14 +74,12 @@ jobs:
               REMOVE=$(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed "s/$BOARD.*//" | sort | uniq)
               for l in ${REMOVE[@]}; do
                 [[ "${DEBUG}" == yes ]] && echo "Removing mirror: $l"
-                echo "RMIRROR=$l" >> $GITHUB_ENV
+                echo "Error $l" >> ${BOARD}.log
                 MIRRORS=$(echo "${MIRRORS}" | sed "s|$l ||")
               done
               [[ $DEBUG == yes ]] && echo "Timeout: $(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | cut -d"/" -f1-4 | sort | uniq)/${BOARD}/archive/$(echo $PARALLEL | egrep -o 'https?://[^ ]+' | rev | cut -d / -f 1 | rev)"
             fi
           # download
-          mkdir -p logs
-          truncate -s 0 logs/${BOARD}
           DOWNLOAD="axel -q -c -a "
           for m in ${MIRRORS[@]}; do
               DOWNLOAD=${DOWNLOAD}" $m$FILE"
@@ -90,7 +89,7 @@ jobs:
               echo "Downloading ..."
               eval "${DOWNLOAD}"
               echo "UPLOAD=true" >> $GITHUB_ENV
-              echo "$m" >> ${BOARD}.log
+              echo "Download $m" >> ${BOARD}.log
           fi
           done
           ls -l
