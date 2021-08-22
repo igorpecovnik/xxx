@@ -58,7 +58,6 @@ jobs:
           set +e
           wget https://imola.armbian.com/dl/_rootfs/bullseye-cli-arm64.374a5f4cc9afba3016111ae833345bc9.tar.lz4.list
       - name: Upload artefacts
-        if: ${{ env.UPLOAD == 'true' }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
