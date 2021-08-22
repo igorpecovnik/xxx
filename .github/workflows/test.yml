@@ -60,7 +60,8 @@ jobs:
         run: |
 
           set +e
-          FILES=$(cat temp/rootfs-${{ matrix.part }}.chunk)
+          CHUNK="${{ matrix.part }}"
+          FILES=$(cat temp/rootfs-${CHUNK}.chunk)
           rsync rsync://rsync.armbian.com/dl/_rootfs/ | awk '{ print $5}' | tail -n +3)
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | grep -v github| tr -d , | tr -d " " | sort| uniq)
           for FILE in ${FILES[@]}
