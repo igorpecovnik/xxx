@@ -18,7 +18,7 @@ jobs:
 
           mkdir -p temp
           rsync rsync://rsync.armbian.com/dl/_rootfs/ | awk '{ print $5}' | tail -n +3 > temp/rootfs.chunk
-          split -d --number=l/5 --additional-suffix=.chunk --suffix-length=1 temp/rootfs.chunk temp/rootfs-
+          split -d --number=l/10 --additional-suffix=.chunk --suffix-length=1 temp/rootfs.chunk temp/rootfs-
 
       - name: Cache Gradle packages
         uses: actions/cache@v2
@@ -33,15 +33,20 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 480
     strategy:
-      max-parallel: 4
+      max-parallel: 5
       fail-fast: false # let other jobs try to complete if one fails
       matrix: 
         include: # build this way: cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/'
+          - part: 0
           - part: 1
           - part: 2
           - part: 3
           - part: 4
           - part: 5
+          - part: 6
+          - part: 7
+          - part: 8
+          - part: 9
 
     steps:
       - name: Install depen
@@ -98,8 +103,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: Armbian*
-          tag: ${{ matrix.board }}
+          file: *.tar*
+          tag: "_rootfs"
           overwrite: true
           file_glob: true
           body: "This is Armbian file mirror at Github"
