@@ -1,4 +1,4 @@
-name: Sync rootfs
+name: Sync ro
 on:
 #  schedule:
 #    - cron:  '0 */4 * * *'
