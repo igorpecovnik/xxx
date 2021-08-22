@@ -6,17 +6,62 @@ on:
   workflow_dispatch:
 
 jobs:
+
   Prepare:
+
     runs-on: ubuntu-20.04
-    if: ${{ github.repository_owner == 'Armbian' }}
+    if: ${{ github.repository_owner == 'igorpecovnik' }}
+    steps:
+
+      - name: Cut the job into n chunks
+        run: |
+
+          mkdir -p temp
+          rsync rsync://rsync.armbian.com/dl/_rootfs/ | awk '{ print $5}' | tail -n +3 > temp/rootfs.chunk
+          split -d --number=l/5 --additional-suffix=.chunk --suffix-length=1 temp/rootfs.chunk temp/rootfs-
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-build
+        with:
+          path: temp
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }}
+
+  Build: # short name because GH will expand with the matrix values
+    needs: [ Prepare ]
+    runs-on: ubuntu-20.04
+    timeout-minutes: 480
+    strategy:
+      max-parallel: 4
+      fail-fast: false # let other jobs try to complete if one fails
+      matrix: 
+        include: # build this way: cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/'
+          - part: 1
+          - part: 2
+          - part: 3
+          - part: 4
+          - part: 5
+
     steps:
       - name: Install depen
         run: sudo apt-get -y install parallel jq axel
-      -
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-build
+        with:
+          path: temp
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }}
+
+      - name: Download part
         run: |
 
           set +e
-          FILES=$(rsync rsync://rsync.armbian.com/dl/_rootfs/ | awk '{ print $5}' | tail -n +3)
+          FILES=$(cat temp/rootfs-${{ matrix.part }}.chunk)
+          rsync rsync://rsync.armbian.com/dl/_rootfs/ | awk '{ print $5}' | tail -n +3)
           MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | grep -v github| tr -d , | tr -d " " | sort| uniq)
           for FILE in ${FILES[@]}
           do
