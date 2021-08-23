@@ -67,10 +67,10 @@ jobs:
           set +e
           CHUNK="${{ matrix.part }}"
           FILES=$(cat temp/rootfs-${CHUNK}.chunk)
-          MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -M -r | tr -d \" | grep http | grep -v github| tr -d , | tr -d " " | sort| uniq)
+          MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -Mr '.' | grep http | tr -d \"," " | sort | uniq)
           for FILE in ${FILES[@]}
           do
-            echo $FILE
+            echo "Checking $FILE"
             PARALLEL=$(
             for k in ${MIRRORS[@]}
             do
@@ -86,13 +86,12 @@ jobs:
               [[ $DEBUG == yes ]] && echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed 's/_rootfs.*//' | sort | uniq
             fi
           # download
-          DOWNLOAD="axel -q -c -a "
+          DOWNLOAD="axel -q -c -a --output=download/ "
           for m in ${MIRRORS[@]}; do
               DOWNLOAD=${DOWNLOAD}" ${m}_rootfs/${FILE}"
           done
-          echo $DOWNLOAD
-          echo "https://github.com/${{ github.repository }}/releases/download/_rootfs/}"
-          if ! wget -q --spider --timeout=5 --tries=2 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/_rootfs/${FILE}} ; then
+          mkdir -p download
+          if ! wget -q --spider --timeout=15 --tries=3 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/_rootfs/${FILE} ; then
               echo "Downloading ..."
               eval "${DOWNLOAD}"
               echo "UPLOAD=true" >> $GITHUB_ENV
@@ -103,7 +102,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "*.tar*"
+          file: download/*
           tag: "_rootfs"
           overwrite: true
           file_glob: true
