@@ -28,15 +28,15 @@ jobs:
           path: temp
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.run_id }}
 
-  Build: # short name because GH will expand with the matrix values
+  Cache: # short name because GH will expand with the matrix values
     needs: [ Prepare ]
     runs-on: ubuntu-20.04
     timeout-minutes: 480
     strategy:
       max-parallel: 5
-      fail-fast: false # let other jobs try to complete if one fails
+      fail-fast: false
       matrix: 
-        include: # build this way: cat userdata.csv | cut -d"/" -f1 | uniq | sed 's/.*/          - board: &/'
+        include:
           - part: 0
           - part: 1
           - part: 2
