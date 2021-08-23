@@ -55,8 +55,7 @@ jobs:
       - name: Download part
         run: |
 
-          set +e
-          wget -P download https://imola.armbian.com/dl/_rootfs/bullseye-cli-arm64.374a5f4cc9afba3016111ae833345bc9.tar.lz4.list
+          set +e          
           wget -P download https://imola.armbian.com/dl/_rootfs/bullseye-cli-arm64.374a5f4cc9afba3016111ae833345bc9.tar.lz4
       - name: Upload artefacts
         uses: svenstaro/upload-release-action@v2
