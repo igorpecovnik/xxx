@@ -65,10 +65,10 @@ jobs:
         run: |
 
           set +e
+          GITURL="${{ github.repository }}"
           CHUNK="${{ matrix.part }}"
-          GITHUBURL="https://github.com/${{ github.repository }}/releases/download/"
           FILES=$(cat temp/rootfs-${CHUNK}.chunk)
-          MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -Mr '.' | grep http | grep -v $GITHUBURL | tr -d \"," " | sort | uniq)
+          MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -Mr '.' | grep http | grep -v $GITURL | tr -d \"," " | sort | uniq)
           for FILE in ${FILES[@]}
           do
             echo "Checking $FILE"
@@ -87,6 +87,7 @@ jobs:
               done
               [[ $DEBUG == yes ]] && echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed 's/_rootfs.*//' | sort | uniq
             fi
+            done
       - name: Upload artefacts
         if: ${{ env.UPLOAD == 'true' }}
         uses: svenstaro/upload-release-action@v2
