@@ -75,6 +75,7 @@ jobs:
         run: |
 
           set +e
+          mkdir -p download
           GITURL="${{ github.repository }}"
           CHUNK="${{ matrix.part }}"
           FILES=$(cat temp/rootfs-${CHUNK}.chunk)
@@ -93,9 +94,9 @@ jobs:
                 [[ "${DEBUG}" == yes ]] && echo "Removing mirror: $l"
                 echo "Error,$l,$FILE" >> mirror.log
                 if ! wget -q --spider --timeout=15 --tries=3 --retry-connrefused https://github.com/${GITURL}/releases/download/_rootfs/${FILE} ; then
-                    rsync -av rsync://rsync.armbian.com/dl/_rootfs/${FILE}* download/
+                    rsync -av rsync://rsync.armbian.com/dl/_rootfs/${FILE}* download/                
+                    echo "UPLOAD=true" >> $GITHUB_ENV
                 fi
-                echo "UPLOAD=true" >> $GITHUB_ENV
               done
               [[ $DEBUG == yes ]] && echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed 's/_rootfs.*//' | sort | uniq
             fi
