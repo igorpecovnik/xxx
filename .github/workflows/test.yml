@@ -79,7 +79,7 @@ jobs:
           GITURL="${{ github.repository }}"
           CHUNK="${{ matrix.part }}"
           FILES=$(cat temp/rootfs-${CHUNK}.chunk)
-          MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -Mr '.' | grep http | grep -v $GITURL | tr -d \"," " | sort | uniq)
+          MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -Mr '.' | grep http | grep -v github | tr -d \"," " | sort | uniq)
           for FILE in ${FILES[@]}
           do
             echo "Checking $FILE"
@@ -88,19 +88,20 @@ jobs:
             do
               echo "${k}_rootfs/${FILE}"
             done | parallel --halt now,fail=1 --jobs 32 wget -q --spider --timeout=15 --tries=3 --retry-connrefused {} 2>&1 >/dev/null)
+  
             if [[ -n "${PARALLEL}" ]]; then
               REMOVE=$(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed "s/_rootfs.*//" | sort | uniq)
               for l in ${REMOVE[@]}; do
                 [[ "${DEBUG}" == yes ]] && echo "Removing mirror: $l"
                 echo "Error,$l,$FILE" >> mirror.log
                 if ! wget -q --spider --timeout=15 --tries=3 --retry-connrefused https://github.com/${GITURL}/releases/download/_rootfs/${FILE} ; then
-                    rsync -av rsync://rsync.armbian.com/dl/_rootfs/${FILE}* download/                
+                    rsync -av rsync://rsync.armbian.com/dl/_rootfs/${FILE} download/                
                     echo "UPLOAD=true" >> $GITHUB_ENV
                 fi
               done
               [[ $DEBUG == yes ]] && echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed 's/_rootfs.*//' | sort | uniq
             fi
-            done
+          done
       - name: Upload artefacts
         if: ${{ env.UPLOAD == 'true' }}
         uses: svenstaro/upload-release-action@v2
