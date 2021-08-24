@@ -66,8 +66,9 @@ jobs:
 
           set +e
           CHUNK="${{ matrix.part }}"
+          GITHUBURL="https://github.com/${{ github.repository }}/releases/download/"
           FILES=$(cat temp/rootfs-${CHUNK}.chunk)
-          MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -Mr '.' | grep http | tr -d \"," " | sort | uniq)
+          MIRRORS=$(curl -sq http://redirect.armbian.com/mirrors | jq -Mr '.' | grep http | grep -v $GITHUBURL | tr -d \"," " | sort | uniq)
           for FILE in ${FILES[@]}
           do
             echo "Checking $FILE"
@@ -75,28 +76,17 @@ jobs:
             for k in ${MIRRORS[@]}
             do
               echo "${k}_rootfs/${FILE}"
-            done | parallel --halt now,fail=1 --jobs 32 wget -q --spider --timeout=5 --tries=2 --retry-connrefused {} 2>&1 >/dev/null)
+            done | parallel --halt now,fail=1 --jobs 32 wget -q --spider --timeout=15 --tries=3 --retry-connrefused {} 2>&1 >/dev/null)
             if [[ -n "${PARALLEL}" ]]; then
               REMOVE=$(echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed "s/_rootfs.*//" | sort | uniq)
               for l in ${REMOVE[@]}; do
                 [[ "${DEBUG}" == yes ]] && echo "Removing mirror: $l"
                 echo "Error,$l,$FILE" >> mirror.log
-                MIRRORS=$(echo "${MIRRORS}" | sed "s|$l ||")
+                rsync -av rsync://rsync.armbian.com/dl/_rootfs/${FILE}* download/
+                echo "UPLOAD=true" >> $GITHUB_ENV
               done
               [[ $DEBUG == yes ]] && echo $PARALLEL | egrep -o 'https?://[^ ]+/' | sed 's/_rootfs.*//' | sort | uniq
             fi
-          # download
-          DOWNLOAD="axel -q -c -a --output=download/ "
-          for m in ${MIRRORS[@]}; do
-              DOWNLOAD=${DOWNLOAD}" ${m}_rootfs/${FILE}"
-          done
-          mkdir -p download
-          if ! wget -q --spider --timeout=15 --tries=3 --retry-connrefused https://github.com/"${{ github.repository }}"/releases/download/_rootfs/${FILE} ; then
-              echo "Downloading ..."
-              eval "${DOWNLOAD}"
-              echo "UPLOAD=true" >> $GITHUB_ENV
-          fi
-          done
       - name: Upload artefacts
         if: ${{ env.UPLOAD == 'true' }}
         uses: svenstaro/upload-release-action@v2
